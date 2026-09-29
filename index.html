@@ -3,27 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vouch, the restaurant app where recommendations come from people you actually know</title>
-<meta name="description" content="Vouch is the restaurant app where recommendations come from people you actually know. Your friends' favourite places on one map of the whole city. Sydney first.">
-<link rel="icon" type="image/svg+xml" href="seal-icon.svg">
+<title>Vouch, eat where your friends eat</title>
+<meta name="description" content="Vouch is the restaurant app where recommendations come from people you actually know. Every restaurant in Sydney on one map, with your friends' vouches lit up on top. Launching this year.">
+<meta name="theme-color" content="#123c31">
+<link rel="icon" type="image/svg+xml" href="mark.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://vouchhq.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vouch">
+<meta property="og:title" content="Vouch, eat where your friends eat">
+<meta property="og:description" content="The restaurant app where recommendations come from people you actually know. Sydney first, launching this year.">
+<meta property="og:url" content="https://vouchhq.app/">
+<meta property="og:image" content="https://vouchhq.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@VouchIncApp">
+<meta name="twitter:title" content="Vouch, eat where your friends eat">
+<meta name="twitter:description" content="The restaurant app where recommendations come from people you actually know. Sydney first, launching this year.">
+<meta name="twitter:image" content="https://vouchhq.app/og.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="app-welcome.webp">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Vouch","legalName":"Vouch Social Pty Ltd","url":"https://vouchhq.app/","logo":"https://vouchhq.app/apple-touch-icon.png","email":"hello@vouchhq.app","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"},"sameAs":["https://www.linkedin.com/company/vouch-inc/","https://twitter.com/VouchIncApp"]}
+</script>
 <style>
   :root {
     --paper: #fbf9f4;
-    --cream: #f1ede4;
     --card: #fffefb;
-    --ink: #1c1e23;
-    --muted: #75787f;
-    --coral: #e4593f;
-    --coral-soft: #f2a48f;
-    --coral-tint: #f8ded6;
-    --green: #1f5c48;
-    --gold: #dfa62f;
+    --sand: #efe9df;
+    --ink: #16181d;
+    --muted: #6f7580;
+    --emerald: #1f7a59;
+    --emerald-bright: #31c48d;
+    --emerald-deep: #1f5c48;
+    --night: #0f2b24;
+    --night-2: #123c31;
+    --gold: #e6a532;
     --hairline: #e5e1d8;
     --radius: 18px;
-    --shadow: 0 6px 24px rgba(28, 30, 35, 0.10);
+    --shadow: 0 6px 24px rgba(22, 24, 29, 0.10);
+    --v-pattern: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'><g fill='none' stroke='%23fbf9f4' stroke-width='3'><path d='M8 8 L18 32 L28 8'/><path d='M28 48 L38 24 L48 48'/></g></svg>");
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -36,12 +60,21 @@
     overflow-x: hidden;
   }
   a { color: inherit; }
-  a:focus-visible, button:focus-visible {
-    outline: 3px solid var(--coral);
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 3px solid var(--emerald-bright);
     outline-offset: 3px;
     border-radius: 4px;
   }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------- the mark ---------- */
+  .mark { display: inline-block; width: 1em; height: 0.95em; vertical-align: -0.12em; }
+  .mark--emerald { color: var(--emerald); }
+  .mark--paper { color: var(--paper); }
 
   /* ---------- nav ---------- */
   header {
@@ -54,232 +87,221 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 14px 24px; max-width: 1080px; margin: 0 auto;
   }
-  .wordmark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .wordmark img { width: 34px; height: 34px; border-radius: 9px; }
-  .wordmark span { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
-  .nav a.contact {
-    text-decoration: none; font-weight: 600; font-size: 14px;
-    background: var(--ink); color: var(--paper);
-    padding: 9px 18px; border-radius: 999px;
-  }
-  .nav a.contact:hover { background: var(--coral); }
+  .wordmark { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .wordmark .mark { font-size: 30px; }
+  .nav a.contact { text-decoration: none; font-weight: 600; font-size: 14px; color: var(--muted); }
+  .nav a.contact:hover { color: var(--emerald); }
 
   /* ---------- hero ---------- */
-  .hero { padding: 72px 0 88px; }
-  .hero .wrap {
-    display: grid; grid-template-columns: 1.05fr 0.95fr;
-    gap: 64px; align-items: center;
-  }
+  .hero { padding: 64px 0 80px; position: relative; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
   .eyebrow {
     font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--coral); margin-bottom: 18px;
+    text-transform: uppercase; color: var(--emerald); margin-bottom: 18px;
   }
   h1 {
-    font-size: clamp(34px, 4.6vw, 52px);
-    font-weight: 700; line-height: 1.12; letter-spacing: -0.025em;
-    margin-bottom: 20px;
+    font-size: clamp(38px, 5.2vw, 60px);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
+    margin-bottom: 18px;
   }
-  h1 em { font-style: normal; color: var(--coral); }
-  .hero p.lede { font-size: 17px; color: var(--muted); max-width: 46ch; margin-bottom: 32px; }
-  .cta-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; text-decoration: none;
-    background: var(--coral); color: #fff;
-    font-weight: 600; font-size: 15px;
-    padding: 13px 26px; border-radius: 999px;
-    box-shadow: 0 4px 14px rgba(228, 89, 63, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(228, 89, 63, 0.4); }
-  .cta-note { font-size: 13.5px; color: var(--muted); font-weight: 500; }
-  .cta-note strong { color: var(--green); font-weight: 600; }
+  .hero p.lede { font-size: 17px; color: var(--muted); max-width: 46ch; margin-bottom: 28px; }
 
-  /* ---------- launch waitlist form ---------- */
+  /* the waitlist form */
   .notify { max-width: 520px; }
-  .notify-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .notify-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
   .notify input[type="email"] {
     flex: 1 1 220px; min-width: 0;
     font: inherit; font-size: 15px; color: var(--ink);
     background: var(--card); border: 1px solid var(--hairline);
     border-radius: 999px; padding: 12px 18px;
   }
-  .notify input[type="email"]:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
-  .notify .btn { border: 0; cursor: pointer; font-family: inherit; white-space: nowrap; }
-  .notify .btn[disabled] { opacity: 0.7; cursor: default; transform: none; }
+  .btn {
+    display: inline-block; text-decoration: none; border: 0; cursor: pointer;
+    background: var(--emerald); color: #fff; font-family: inherit;
+    font-weight: 600; font-size: 15px; white-space: nowrap;
+    padding: 13px 26px; border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(31, 122, 89, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(31, 122, 89, 0.4); }
+  .btn[disabled] { opacity: 0.7; cursor: default; transform: none; }
+  .btn--paper { background: var(--paper); color: var(--night); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); }
   .notify .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .notify .cta-note.ok strong { color: var(--green); }
-  .notify .cta-note.err strong { color: var(--coral); }
-  .sr-only {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-  }
+  .cta-note { font-size: 13.5px; color: var(--muted); font-weight: 500; }
+  .cta-note strong { color: var(--emerald); font-weight: 600; }
+  .cta-note.err strong { color: #b3402f; }
+  .proof { display: none; align-items: center; gap: 8px; margin-top: 14px; font-size: 13.5px; color: var(--muted); font-weight: 500; }
+  .proof.on { display: flex; }
+  .proof b { color: var(--ink); }
+  .proof .dots { display: inline-flex; }
+  .proof .dots span { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--paper); margin-left: -6px; background: var(--emerald); }
+  .proof .dots span:nth-child(2) { background: var(--gold); }
+  .proof .dots span:nth-child(3) { background: var(--emerald-deep); }
+  .proof .dots span:first-child { margin-left: 0; }
 
-  /* ---------- hero visual: chat → vouch ---------- */
-  .demo { display: flex; flex-direction: column; gap: 0; max-width: 400px; justify-self: end; width: 100%; }
-  .chat {
-    background: var(--card); border: 1px solid var(--hairline);
-    border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
-    position: relative;
+  /* hero phone */
+  .hero-phone { justify-self: end; position: relative; width: 100%; max-width: 330px; }
+  .hero-phone::before {
+    content: ""; position: absolute; inset: 12% -18% -6% -18%; z-index: -1;
+    background: radial-gradient(closest-side, rgba(49, 196, 141, 0.28), rgba(49, 196, 141, 0));
   }
-  .chat-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); text-align: center; margin-bottom: 14px;
+  .phone {
+    width: 100%; border-radius: 44px; padding: 10px;
+    background: var(--night);
+    box-shadow: var(--shadow), 0 24px 56px rgba(15, 43, 36, 0.28);
   }
-  .bubble {
-    max-width: 82%; padding: 10px 14px; border-radius: 16px;
-    font-size: 14px; line-height: 1.45; margin-bottom: 8px;
-  }
-  .bubble.them { background: var(--cream); border-bottom-left-radius: 5px; }
-  .bubble.me {
-    background: var(--coral); color: #fff; margin-left: auto;
-    border-bottom-right-radius: 5px; position: relative;
-    padding-right: 48px;
-  }
-  .stamp {
-    position: absolute; right: -18px; bottom: -20px;
-    width: 64px; height: 64px; transform: rotate(-12deg);
-    filter: drop-shadow(0 3px 8px rgba(28, 30, 35, 0.25));
-  }
-  .flow {
-    align-self: center; height: 44px; display: flex; align-items: center;
-    color: var(--muted);
-  }
-  .flow svg { height: 100%; }
-  .vouch-card {
-    background: var(--card); border: 1px solid var(--hairline);
-    border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .avatar {
-    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-    background: var(--green); color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 600; font-size: 17px;
-  }
-  .vouch-card h3 { font-size: 15px; font-weight: 600; line-height: 1.3; }
-  .vouch-card h3 span { color: var(--coral); }
-  .vouch-card p { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
-  .vouch-meta { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-  .tag {
-    font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
-    background: var(--coral-tint); color: var(--coral);
-  }
-  .tag.trust { background: rgba(31, 92, 72, 0.1); color: var(--green); }
-  .tag.rating { background: rgba(223, 166, 47, 0.16); color: #8a6212; }
+  .phone img { display: block; width: 100%; height: auto; border-radius: 34px; }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .stamp {
-      animation: stamp-in 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) 0.7s both;
-    }
-    @keyframes stamp-in {
-      from { transform: rotate(-12deg) scale(2.4); opacity: 0; }
-      to   { transform: rotate(-12deg) scale(1); opacity: 1; }
-    }
-  }
+  /* ---------- night bands ---------- */
+  .band { background: linear-gradient(165deg, var(--emerald-deep) 0%, var(--night-2) 55%, var(--night) 100%); color: var(--paper); position: relative; overflow: hidden; }
+  .band::before { content: ""; position: absolute; inset: 0; opacity: 0.09; background-image: var(--v-pattern); background-size: 56px 56px; pointer-events: none; }
+  .band > .wrap { position: relative; }
+  .band h2 { color: var(--paper); }
+  .band p { color: rgba(251, 249, 244, 0.78); }
 
-  /* ---------- problem section ---------- */
-  .problem { background: var(--cream); padding: 80px 0; }
+  /* ---------- problem ---------- */
+  .problem { padding: 84px 0; }
   .problem .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
   h2 {
     font-size: clamp(26px, 3.2vw, 36px); font-weight: 700;
-    line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px;
+    line-height: 1.18; letter-spacing: -0.02em; margin-bottom: 16px;
   }
-  .problem p { color: var(--muted); font-size: 16px; max-width: 48ch; }
+  .problem p { font-size: 16px; max-width: 48ch; }
   .problem p + p { margin-top: 14px; }
   .compare { display: flex; flex-direction: column; gap: 14px; }
   .review-card {
     border-radius: var(--radius); padding: 16px 20px; font-size: 14px;
     display: flex; gap: 13px; align-items: flex-start;
   }
-  .review-card.stranger {
-    background: rgba(28, 30, 35, 0.05); color: var(--muted);
-    border: 1px dashed rgba(28, 30, 35, 0.2);
-  }
-  .review-card.stranger .avatar { background: #c9c5bd; color: #fff; }
-  .review-card.friend { background: var(--card); box-shadow: var(--shadow); border: 1px solid var(--hairline); }
-  .review-card .who { font-weight: 600; font-size: 14px; color: inherit; }
+  .review-card.stranger { background: rgba(251, 249, 244, 0.06); border: 1px dashed rgba(251, 249, 244, 0.3); color: rgba(251, 249, 244, 0.7); }
+  .review-card.friend { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+  .review-card.friend p { color: var(--muted); }
   .review-card.friend .who { color: var(--ink); }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: var(--emerald); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 17px;
+  }
+  .review-card.stranger .avatar { background: rgba(251, 249, 244, 0.25); }
+  .review-card .who { font-weight: 600; font-size: 14px; }
   .review-card .what { font-size: 13.5px; margin-top: 1px; }
-  .stars { color: #b5b1a8; letter-spacing: 2px; font-size: 13px; }
-  .verdict {
-    text-align: center; font-size: 13px; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-  }
-  .stat-row {
-    grid-column: 1 / -1; display: flex; gap: 48px; justify-content: center;
-    flex-wrap: wrap; margin-top: 24px; text-align: center;
-  }
-  .stat b { display: block; font-size: 40px; font-weight: 700; color: var(--coral); line-height: 1.1; }
-  .stat span { font-size: 13.5px; color: var(--muted); max-width: 24ch; display: inline-block; }
+  .stars { opacity: 0.6; letter-spacing: 2px; font-size: 13px; }
+  .vees { color: var(--emerald); font-weight: 700; letter-spacing: 1px; font-size: 13px; }
+  .verdict { text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
 
-  /* ---------- app screens ---------- */
+  /* ---------- screens ---------- */
   .screens { padding: 88px 0; }
   .screens .intro { text-align: center; max-width: 56ch; margin: 0 auto 52px; }
   .screens .intro p { color: var(--muted); }
-  .phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
+  .phones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; max-width: 760px; margin: 0 auto; align-items: start; }
   .phone-col { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .phone {
-    width: 100%; max-width: 280px;
-    border-radius: 40px; padding: 10px;
-    background: var(--ink);
-    box-shadow: var(--shadow), 0 18px 44px rgba(28, 30, 35, 0.18);
-  }
-  .phone img {
-    display: block; width: 100%; height: auto;
-    border-radius: 31px;
-  }
-  .phone-col h3 { font-size: 16.5px; font-weight: 600; margin-top: 22px; }
-  .phone-col p { font-size: 14px; color: var(--muted); max-width: 30ch; margin-top: 6px; }
+  .phone-col .phone { max-width: 290px; }
+  .phone-col h3 { font-size: 17px; font-weight: 600; margin-top: 22px; }
+  .phone-col p { font-size: 14px; color: var(--muted); max-width: 32ch; margin-top: 6px; }
 
   /* ---------- how ---------- */
-  .how { background: var(--cream); padding: 88px 0; }
+  .how { background: var(--sand); padding: 88px 0; }
   .how .intro { text-align: center; max-width: 56ch; margin: 0 auto 48px; }
   .how .intro p { color: var(--muted); }
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .pillar {
-    background: var(--card); border: 1px solid var(--hairline);
-    border-radius: var(--radius); padding: 28px 26px; box-shadow: var(--shadow);
-  }
-  .pillar .icon {
-    width: 46px; height: 46px; border-radius: 13px; background: var(--coral-tint);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-  }
+  .pillar { background: var(--card); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 28px 26px; box-shadow: var(--shadow); }
+  .pillar .icon { width: 46px; height: 46px; border-radius: 13px; background: rgba(31, 122, 89, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; color: var(--emerald); font-size: 26px; }
   .pillar h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
   .pillar p { font-size: 14.5px; color: var(--muted); }
 
+  /* ---------- faq ---------- */
+  .faq { padding: 88px 0; }
+  .faq .wrap { max-width: 720px; }
+  .faq h2 { text-align: center; margin-bottom: 32px; }
+  .faq details { border-top: 1px solid var(--hairline); padding: 18px 0; }
+  .faq details:last-of-type { border-bottom: 1px solid var(--hairline); }
+  .faq summary { cursor: pointer; font-weight: 600; font-size: 16.5px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--emerald); font-weight: 600; flex-shrink: 0; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { color: var(--muted); font-size: 15px; margin-top: 10px; max-width: 60ch; }
+
+  /* ---------- final cta ---------- */
+  .final { padding: 88px 0; text-align: center; }
+  .final .mark { font-size: 64px; display: block; margin: 0 auto 20px; }
+  .final h2 { font-size: clamp(30px, 4vw, 44px); }
+  .final p { max-width: 44ch; margin: 0 auto 28px; }
+
   /* ---------- footer ---------- */
-  footer { background: var(--ink); color: rgba(251, 249, 244, 0.75); padding: 56px 0; }
-  footer .wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
-  footer .wordmark span { color: var(--paper); }
-  footer p { font-size: 14.5px; max-width: 44ch; }
-  footer a.mail {
-    color: var(--coral-soft); font-weight: 600; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
+  footer { background: var(--night); color: rgba(251, 249, 244, 0.72); padding: 48px 0; border-top: 1px solid rgba(251, 249, 244, 0.08); }
+  footer .wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  footer .wordmark { color: var(--paper); }
+  footer p { font-size: 14.5px; max-width: 46ch; }
+  footer .links { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; font-size: 14px; font-weight: 600; }
+  footer .links a { color: var(--paper); text-decoration: none; opacity: 0.9; }
+  footer .links a:hover { opacity: 1; text-decoration: underline; }
+  footer .fine { font-size: 12.5px; opacity: 0.55; margin-top: 8px; }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 24px);
+    width: min(480px, calc(100% - 32px)); z-index: 50;
+    background: var(--card); color: var(--ink);
+    border-radius: 20px; box-shadow: 0 18px 48px rgba(15, 43, 36, 0.28), 0 0 0 1px var(--hairline);
+    border-left: 6px solid var(--emerald);
+    padding: 18px 20px 18px 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0.25s;
   }
-  footer a.mail svg { flex-shrink: 0; }
-  footer a.mail:hover { text-decoration: underline; }
-  footer .fine { font-size: 12.5px; color: rgba(251, 249, 244, 0.45); margin-top: 12px; }
+  .toast.on { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity 0.25s ease, transform 0.25s ease; }
+  .toast .mark { font-size: 40px; flex-shrink: 0; margin-top: 2px; }
+  .toast h4 { font-size: 16px; font-weight: 700; }
+  .toast p { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+  .toast .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .toast .actions button {
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    border-radius: 999px; padding: 7px 14px; border: 1px solid var(--hairline); background: var(--paper); color: var(--ink);
+  }
+  .toast .actions button.primary { background: var(--emerald); color: #fff; border-color: var(--emerald); }
+  .toast .close {
+    position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%;
+    border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer;
+  }
+  .toast .close:hover { background: var(--sand); color: var(--ink); }
+  @media (prefers-reduced-motion: reduce) {
+    .toast, .toast.on { transition: none; }
+    .btn:hover { transform: none; }
+  }
 
   /* ---------- responsive ---------- */
   @media (max-width: 860px) {
-    .hero { padding: 48px 0 64px; }
-    .hero .wrap, .problem .wrap { grid-template-columns: 1fr; gap: 44px; }
-    .demo { justify-self: center; }
-    .phones { grid-template-columns: 1fr; gap: 48px; }
+    .hero { padding: 40px 0 56px; }
+    .hero .wrap, .problem .wrap { grid-template-columns: 1fr; gap: 40px; }
+    .hero-phone { justify-self: center; max-width: 280px; }
+    .phones { grid-template-columns: 1fr; gap: 44px; }
     .pillars { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-    .stat-row { gap: 32px; }
   }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="v-shape">
+      <path d="M-62.86 -60 L-31.43 -60 L9.67 35.89 L-11.43 60 Z"></path>
+      <path d="M62.86 -60 L31.43 -60 L2.04 8.57 L17.75 45.24 Z"></path>
+    </g>
+    <symbol id="v-mark" viewBox="-72 -68 144 136">
+      <use href="#v-shape" fill="currentColor" fill-opacity="0.42"></use>
+      <use href="#v-shape" fill="currentColor" fill-opacity="0.42" transform="translate(-6 4)"></use>
+      <use href="#v-shape" fill="none" stroke="currentColor" stroke-width="3" stroke-opacity="0.85"></use>
+    </symbol>
+  </defs>
+</svg>
+
 <header>
   <nav class="nav" aria-label="Main">
     <a class="wordmark" href="#">
-      <img src="seal-icon.svg" alt="" width="34" height="34">
+      <svg class="mark mark--emerald" aria-hidden="true"><use href="#v-mark"></use></svg>
       <span>Vouch</span>
     </a>
-    <a class="contact" href="mailto:hello@vouchhq.app">Contact us</a>
+    <a class="contact" href="mailto:hello@vouchhq.app">Contact</a>
   </nav>
 </header>
 
@@ -287,13 +309,12 @@
   <section class="hero">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Real word of mouth, made into a map</p>
-        <h1>Recommendations from people you <em>actually know.</em></h1>
+        <p class="eyebrow">Sydney · launching this year</p>
+        <h1>Eat where your friends eat.</h1>
         <p class="lede">
-          A friend saying “trust me” beats any star rating. Vouch puts your
-          friends' favourite places on one map of the whole city, with their
-          photos and honest notes, so “where should we eat tonight?” finally
-          has an answer.
+          Vouch is the restaurant app where recommendations come from people
+          you actually know. Every restaurant in Sydney on one map, with your
+          friends' vouches lit up on top.
         </p>
         <form class="notify" id="notify" action="https://waitlist.vouchhq.app/" method="post" novalidate>
           <label class="sr-only" for="notify-email">Your email</label>
@@ -302,42 +323,19 @@
             <button class="btn" type="submit">Tell me when it launches</button>
           </div>
           <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <p class="cta-note" id="notify-note" role="status" aria-live="polite"><strong>In testing with friends</strong> · App Store in Sydney later this year</p>
+          <p class="cta-note" id="notify-note" role="status" aria-live="polite">One email when it launches, and never anything else.</p>
+          <p class="proof" id="proof" aria-live="polite"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span><span><b id="proof-count"></b> people are already on the list</span></p>
         </form>
       </div>
-
-      <div class="demo" aria-label="Example: a friend's text message becomes a vouch">
-        <div class="chat">
-          <p class="chat-label">Saturday, 6:42 pm</p>
-          <p class="bubble them">where should we eat tonight??</p>
-          <p class="bubble me">
-            Casa Rosa. best lasagne I've had in years, trust me 🍝
-            <img class="stamp" src="seal-icon.svg" alt="Vouch seal stamp">
-          </p>
-        </div>
-        <div class="flow" aria-hidden="true">
-          <svg viewBox="0 0 24 44" width="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M12 4 v28" stroke-dasharray="2 5"></path>
-            <path d="M6 32 l6 8 6-8"></path>
-          </svg>
-        </div>
-        <div class="vouch-card">
-          <span class="avatar" aria-hidden="true">D</span>
-          <div>
-            <h3>Dana vouches for <span>Casa Rosa</span></h3>
-            <p>“Best lasagne I've had in years. Get the ragù.”</p>
-            <div class="vouch-meta">
-              <span class="tag rating">4.5</span>
-              <span class="tag">Italian · Surry Hills</span>
-              <span class="tag trust">Friend for 8 years</span>
-            </div>
-          </div>
+      <div class="hero-phone">
+        <div class="phone">
+          <img src="app-welcome.webp" alt="The Vouch welcome screen: the V mark, 'Eat where your friends eat', and Sydney's most vouched restaurants" width="640" height="1386" fetchpriority="high">
         </div>
       </div>
     </div>
   </section>
 
-  <section class="problem">
+  <section class="band problem">
     <div class="wrap">
       <div>
         <h2>A 4.2 from a thousand strangers tells you almost nothing.</h2>
@@ -364,14 +362,10 @@
         <div class="review-card friend">
           <span class="avatar" aria-hidden="true">D</span>
           <div>
-            <p class="who">Dana, friend for 8 years</p>
-            <p class="what">“Best lasagne I've had in years. Going back Friday, come with.”</p>
+            <p class="who">Dana, friend for 8 years <span class="vees">V V V V V 4.5</span></p>
+            <p class="what">“Best lasagne I've had in years. Get the ragù. Going back Friday, come with.”</p>
           </div>
         </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat"><b>92%</b><span>trust recommendations from people they know</span></div>
-        <div class="stat"><b>#1</b><span>word of mouth is still how most people discover restaurants</span></div>
       </div>
     </div>
   </section>
@@ -385,24 +379,17 @@
       <div class="phones">
         <div class="phone-col">
           <div class="phone">
-            <img src="app-map.webp" alt="Vouch map of Sydney with a restaurant card open: Pandawa Nasi Bungkus, vouched by Max and Sarah, with hours and walking time" width="640" height="1386" loading="lazy">
+            <img src="app-map.webp" alt="Vouch map of Sydney with a restaurant open: Pandawa Nasi Bungkus, rated 4.5 by your circle with three vouches" width="640" height="1386" loading="lazy">
           </div>
           <h3>The map is home</h3>
-          <p>Over twelve thousand Sydney places, with your friends' vouches lit up on top. Tap one and their note is right there.</p>
+          <p>Over twelve thousand Sydney places. Tap one and your friends' vouches, photos and notes are right there.</p>
         </div>
         <div class="phone-col">
           <div class="phone">
-            <img src="app-journal.webp" alt="Vouch journals screen: a Solo lunches journal with three places, its pins on a small map, and friends to share it with" width="640" height="1386" loading="lazy">
+            <img src="app-rewards.webp" alt="A Vouch medal unlocking: Chronicler, silver, for ten journal entries" width="640" height="1386" loading="lazy">
           </div>
-          <h3>Journals for the places you keep</h3>
-          <p>Solo lunches, date nights, the list for when the parents visit. Share one with a friend, or blend two maps into one.</p>
-        </div>
-        <div class="phone-col">
-          <div class="phone">
-            <img src="app-friends.webp" alt="Vouch friends screen: a circle of four friends, a friend request, and people you may know" width="640" height="1386" loading="lazy">
-          </div>
-          <h3>Your circle, and only your circle</h3>
-          <p>Private by default. You add friends on purpose, and what you write stays with the people you choose to share it with.</p>
+          <h3>Medals for what you add</h3>
+          <p>Every vouch, photo and journal entry counts. Bronze, silver and gold, for contribution rather than streaks.</p>
         </div>
       </div>
     </div>
@@ -416,27 +403,56 @@
       </div>
       <div class="pillars">
         <div class="pillar">
-          <div class="icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e4593f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 l4.5 4.5 L19.5 7"></path></svg>
-          </div>
+          <div class="icon"><svg class="mark" aria-hidden="true"><use href="#v-mark"></use></svg></div>
           <h3>Rate it, and you've vouched</h3>
-          <p>The rating is the only input. Four stars or better means you'd send a friend, and that is a vouch, with your photo and a note on what to order.</p>
+          <p>The rating is the only input. Four Vs or better means you'd send a friend, and that is a vouch, with your photo and a note on what to order.</p>
         </div>
         <div class="pillar">
-          <div class="icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e4593f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
-          </div>
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></div>
           <h3>Useful on day one</h3>
-          <p>Bring your Google Maps pins in, keep journals and a want-to-try list, and earn medals for what you add to the map. All of it works before a single friend joins.</p>
+          <p>Bring your Google Maps pins in, keep journals and a want-to-try list, and earn medals for what you add. All of it works before a single friend joins.</p>
         </div>
         <div class="pillar">
-          <div class="icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e4593f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>
-          </div>
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg></div>
           <h3>Tonight, decided</h3>
-          <p>Blend your map with a friend's to see where you overlap, or start a Table Match and let the group pick a place together, without leaving the app.</p>
+          <p>Blend your map with a friend's to see where you overlap, or start a Table Match and let the group pick a place together, inside the app.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="wrap">
+      <h2>Questions people ask</h2>
+      <details>
+        <summary>When does it launch?</summary>
+        <p>Sydney first, on the App Store later this year. Friends of the team are testing it now. Leave your email above and you'll hear the day it's live.</p>
+      </details>
+      <details>
+        <summary>Does it cost anything?</summary>
+        <p>Vouch is free to use. Your feed is your friends' places and nothing else.</p>
+      </details>
+      <details>
+        <summary>Who can see my places?</summary>
+        <p>You're private by default. You add friends on purpose, and what you write stays with the people you choose to share it with.</p>
+      </details>
+      <details>
+        <summary>Can I bring in the places I've already saved?</summary>
+        <p>Yes. Import your Google Maps saved places and they land on your map on day one.</p>
+      </details>
+      <details>
+        <summary>What about other cities?</summary>
+        <p>Sydney until it's dense enough that a friend's recommendation is always nearby, then Melbourne on the same playbook.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="band final">
+    <div class="wrap">
+      <svg class="mark mark--paper" aria-hidden="true"><use href="#v-mark"></use></svg>
+      <h2>Be first at the table.</h2>
+      <p>One email when Vouch launches in Sydney. Your friends' favourite places, on one map, from day one.</p>
+      <a class="btn btn--paper" href="#notify" id="final-cta">Join the waitlist</a>
     </div>
   </section>
 </main>
@@ -444,43 +460,90 @@
 <footer>
   <div class="wrap">
     <a class="wordmark" href="#">
-      <img src="seal-icon.svg" alt="" width="34" height="34">
+      <svg class="mark mark--paper" aria-hidden="true"><use href="#v-mark"></use></svg>
       <span>Vouch</span>
     </a>
     <p>The restaurant app where recommendations come from people you actually know. Built in Sydney.</p>
-    <p><a class="mail" href="#notify">Want to hear when it launches? Leave your email above.</a></p>
-    <p><a class="mail" href="mailto:hello@vouchhq.app"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="m3.5 7.5 8.5 6 8.5-6"></path></svg>hello@vouchhq.app</a></p>
+    <nav class="links" aria-label="Elsewhere">
+      <a href="https://www.linkedin.com/company/vouch-inc/" rel="me noopener">LinkedIn</a>
+      <a href="https://twitter.com/VouchIncApp" rel="me noopener">X</a>
+      <a href="mailto:hello@vouchhq.app">hello@vouchhq.app</a>
+    </nav>
     <p class="fine">© 2026 Vouch Social Pty Ltd · Sydney, Australia</p>
   </div>
 </footer>
+
+<div class="toast" id="toast" role="dialog" aria-labelledby="toast-title" aria-describedby="toast-body" aria-hidden="true">
+  <svg class="mark mark--emerald" aria-hidden="true"><use href="#v-mark"></use></svg>
+  <div>
+    <h4 id="toast-title">You're on the list</h4>
+    <p id="toast-body">We'll email you the day Vouch launches in Sydney, and never for anything else.</p>
+    <div class="actions">
+      <button type="button" class="primary" id="toast-share">Tell a friend</button>
+      <button type="button" id="toast-ok">Done</button>
+    </div>
+  </div>
+  <button type="button" class="close" id="toast-close" aria-label="Close">×</button>
+</div>
 
 <script>
   (function () {
     var form = document.getElementById('notify');
     var note = document.getElementById('notify-note');
     var button = form.querySelector('button');
-    var messages = {
-      yes: "<strong>You're on the list.</strong> We'll email you before launch, and never for anything else.",
-      already: "<strong>You're already on the list.</strong> We'll email you before launch.",
-      invalid: "<strong>That doesn't look like an email address.</strong> Have another go.",
-      failed: "<strong>That didn't send.</strong> Try again in a moment, or email hello@vouchhq.app."
-    };
-    function show(kind) {
-      note.innerHTML = messages[kind];
-      note.className = 'cta-note ' + (kind === 'yes' || kind === 'already' ? 'ok' : 'err');
+    var toast = document.getElementById('toast');
+    var toastTitle = document.getElementById('toast-title');
+    var toastBody = document.getElementById('toast-body');
+    var toastTimer;
+    var defaultNote = note.innerHTML;
+
+    function showToast(already) {
+      toastTitle.textContent = already ? "You're already on the list" : "You're on the list";
+      toastBody.textContent = "We'll email you the day Vouch launches in Sydney, and never for anything else.";
+      toast.classList.add('on');
+      toast.setAttribute('aria-hidden', 'false');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 9000);
+      document.getElementById('toast-ok').focus();
+    }
+    function hideToast() {
+      toast.classList.remove('on');
+      toast.setAttribute('aria-hidden', 'true');
+      clearTimeout(toastTimer);
+    }
+    document.getElementById('toast-close').addEventListener('click', hideToast);
+    document.getElementById('toast-ok').addEventListener('click', hideToast);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideToast(); });
+    document.addEventListener('click', function (e) { if (toast.classList.contains('on') && !toast.contains(e.target) && !form.contains(e.target)) hideToast(); });
+    document.getElementById('toast-share').addEventListener('click', function () {
+      var data = { title: 'Vouch', text: 'Eat where your friends eat. Vouch launches in Sydney this year.', url: 'https://vouchhq.app/' };
+      if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(data.url).then(function () {
+          toastBody.textContent = 'Link copied. Send it to the friend who always knows where to eat.';
+        });
+      }
+    });
+
+    function setNote(html, err) {
+      note.innerHTML = html;
+      note.className = 'cta-note' + (err ? ' err' : '');
     }
 
     // Back from a JavaScript-off submit: the worker redirects here with a flag.
     var joined = new URLSearchParams(location.search).get('joined');
-    if (joined && messages[joined]) {
-      show(joined);
-      history.replaceState(null, '', location.pathname + location.hash);
-    }
+    if (joined === 'yes' || joined === 'already') showToast(joined === 'already');
+    if (joined === 'invalid') setNote("<strong>That doesn't look like an email address.</strong> Have another go.", true);
+    if (joined) history.replaceState(null, '', location.pathname + location.hash);
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       var email = form.email.value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { show('invalid'); form.email.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        setNote("<strong>That doesn't look like an email address.</strong> Have another go.", true);
+        form.email.focus();
+        return;
+      }
       button.disabled = true;
       fetch(form.action, {
         method: 'POST',
@@ -489,12 +552,36 @@
       })
         .then(function (res) { return res.json().then(function (body) { return { ok: res.ok, body: body }; }); })
         .then(function (r) {
-          if (r.ok && r.body.ok) { show(r.body.already ? 'already' : 'yes'); form.email.value = ''; }
-          else if (r.body && r.body.error) { show('invalid'); }
-          else { show('failed'); }
+          if (r.ok && r.body.ok) {
+            setNote(defaultNote, false);
+            form.email.value = '';
+            showToast(!!r.body.already);
+            if (!r.body.already) bumpProof();
+          } else if (r.body && r.body.error) {
+            setNote("<strong>That doesn't look like an email address.</strong> Have another go.", true);
+          } else {
+            setNote("<strong>That didn't send.</strong> Try again in a moment, or email hello@vouchhq.app.", true);
+          }
         })
-        .catch(function () { show('failed'); })
+        .catch(function () { setNote("<strong>That didn't send.</strong> Try again in a moment, or email hello@vouchhq.app.", true); })
         .then(function () { button.disabled = false; });
+    });
+
+    // Social proof: the live count, shown once it is worth showing.
+    var proof = document.getElementById('proof');
+    var proofCount = document.getElementById('proof-count');
+    var count = 0;
+    function renderProof() {
+      if (count >= 25) { proofCount.textContent = count.toLocaleString(); proof.classList.add('on'); }
+    }
+    function bumpProof() { count += 1; renderProof(); }
+    fetch('https://waitlist.vouchhq.app/count')
+      .then(function (r) { return r.json(); })
+      .then(function (b) { count = Number(b.count) || 0; renderProof(); })
+      .catch(function () {});
+
+    document.getElementById('final-cta').addEventListener('click', function () {
+      setTimeout(function () { form.email.focus(); }, 400);
     });
   })();
 </script>

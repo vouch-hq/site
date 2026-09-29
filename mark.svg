@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The Vouch mark: the V drawn in film (app/frontend/src/components/marks/TintMark.jsx geometry),
+       paper on night green. Two copies laid slightly off-register under an outline. -->
+  <rect width="64" height="64" rx="14" fill="#123c31"/>
+  <g transform="translate(32 33) scale(0.34)">
+    <g id="v">
+      <path d="M-62.86 -60 L-31.43 -60 L9.67 35.89 L-11.43 60 Z"/>
+      <path d="M62.86 -60 L31.43 -60 L2.04 8.57 L17.75 45.24 Z"/>
+    </g>
+    <use href="#v" fill="#fbf9f4" fill-opacity="0.55"/>
+    <use href="#v" fill="#fbf9f4" fill-opacity="0.55" transform="translate(-6 4)"/>
+    <use href="#v" fill="none" stroke="#fbf9f4" stroke-width="3.5" stroke-opacity="0.9"/>
+  </g>
+</svg>
